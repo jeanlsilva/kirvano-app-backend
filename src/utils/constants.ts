@@ -1,1 +1,2 @@
 export const ACCESS_TOKEN = 'ABCDE12345';
+export const REFUSED_CARD_NUMBER = '1234 1234 1234 1234';
