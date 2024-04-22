@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/main/server.js",
+    "build": "rimraf dist && ttsc -p tsconfig-build.json",
+    "start-dev": "nodemon --watch 'src/' --exec 'ts-node src/main/server.ts' -e ts"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +18,8 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.4.5"
   }
