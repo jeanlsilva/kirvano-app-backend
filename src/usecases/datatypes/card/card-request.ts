@@ -1,5 +1,5 @@
-export interface CheckoutRequest {
-    name: string
+export interface CardRequest {
+    name: string;
     cardNumber: string;
     expirationMonth: number;
     expirationYear: number;

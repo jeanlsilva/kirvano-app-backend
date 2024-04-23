@@ -1,12 +1,12 @@
 import { Controller } from '@/presentation/controllers/ports/controller';
 import { HttpRequest } from '@/presentation/controllers/ports/http-request';
 import { HttpResponse } from '@/presentation/controllers/ports/http-response';
-import { CheckoutRequest } from '@/usecases/datatypes/checkout-request';
-import { CheckoutResponse } from '@/usecases/datatypes/checkout-response';
+import { CheckoutRequest } from '@/usecases/datatypes/checkout/checkout-request';
+import { OrderResponse } from '@/usecases/datatypes/order';
 import { UseCase } from '@/usecases/ports/use-case';
 
 export class CheckoutController implements Controller<CheckoutRequest> {
-  constructor(private useCase: UseCase<CheckoutRequest, CheckoutResponse>) {}
+  constructor(private useCase: UseCase<HttpRequest<CheckoutRequest>, OrderResponse>) {}
   async handle(request: HttpRequest<CheckoutRequest>): Promise<HttpResponse> {
     try {
       const response = await this.useCase.perform(request);

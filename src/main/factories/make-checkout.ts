@@ -1,10 +1,16 @@
 import { CheckoutController } from '@/presentation/controllers/checkout-controller'
 import { Controller } from '@/presentation/controllers/ports/controller'
 import { Checkout } from '@/usecases/checkout'
-import { CheckoutRequest } from '@/usecases/datatypes/checkout-request';
+import { MakeCardRepository } from './make-card-repository';
+import { MakeOrderRepository } from './make-order-repository';
+import { AddCard } from '@/usecases/add-card';
+import { CheckoutRequest } from '@/usecases/datatypes/checkout/checkout-request';
 
 export const makeCheckoutController = (): Controller<CheckoutRequest> => {
-    const useCase = new Checkout();
-    const checkoutController = new CheckoutController(useCase);
+    const cardRepository = MakeCardRepository();
+    const orderRepository = MakeOrderRepository();
+    const addCardUseCase = new AddCard(cardRepository);
+    const checkoutUseCase = new Checkout(addCardUseCase, orderRepository);
+    const checkoutController = new CheckoutController(checkoutUseCase);
     return checkoutController;
 }

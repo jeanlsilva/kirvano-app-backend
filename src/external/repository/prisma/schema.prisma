@@ -20,6 +20,7 @@ model card {
   expiry_month  Int
   expiry_year   Int
   cvc           String
+  orders        order[]
 }
 
 model address {
@@ -27,4 +28,19 @@ model address {
   first_line    String
   street_name   String
   postcode      String
+  orders        order[]
+}
+
+model order {
+  id              Int     @unique @default(autoincrement())
+  card_id         Int
+  address_id      Int
+  product_name    String
+  product_avatar  String
+  subtotal        Int
+  tax             Int
+  shipping_fee    Int
+  total           Int
+  card            card    @relation(fields: [card_id], references: [id])
+  address         address @relation(fields: [address_id], references: [id])
 }
