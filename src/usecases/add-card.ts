@@ -16,9 +16,9 @@ export class AddCard implements UseCase<CardRequest, CardResponse> {
     }
 
     async perform(card: CardRequest): Promise<Card> {
-        const cardNumber = card.cardNumber
-        const expirationMonth = card.expirationMonth;
-        const expirationYear = card.expirationYear;
+        const cardNumber = card.number;
+        const expirationMonth = card.expiry_month;
+        const expirationYear = card.expiry_year;
         const expiryDate = new Date(expirationYear, expirationMonth - 1, 1);
 
         if (!this.validateCard(cardNumber)) {
@@ -29,12 +29,6 @@ export class AddCard implements UseCase<CardRequest, CardResponse> {
             throw new ExpiredCardError();
         }
 
-        return await this.cardRepository.create({
-            name: card.name,
-            number: card.cardNumber,
-            expiry_month: card.expirationMonth,
-            expiry_year: card.expirationYear,
-            cvc: card.cvc
-        });
+        return await this.cardRepository.create(card);
     }
 }

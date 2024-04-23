@@ -1,7 +1,7 @@
 export interface CardRequest {
     name: string;
-    cardNumber: string;
-    expirationMonth: number;
-    expirationYear: number;
+    number: string;
+    expiry_month: number;
+    expiry_year: number;
     cvc: string;
 }

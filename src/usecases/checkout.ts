@@ -12,11 +12,17 @@ export class Checkout implements UseCase<HttpRequest<CheckoutRequest>, OrderResp
     ) {}
 
     async perform(request: HttpRequest<CheckoutRequest>) {
-        const card = await this.addCard.perform(request.body.card)
+        let cardId
+        if (request.body.card_id) {
+            cardId = request.body.card_id
+        } else {
+            const card = await this.addCard.perform(request.body.card);
+            cardId = card.id;
+        }
 
         await this.orderRepository.checkout({
-            card_id: card.id,
-            address_id: 1, // TODO: create address
+            card_id: cardId,
+            address_id: request.body.address_id,
             product_name: request.body.product_name,
             product_avatar: request.body.product_avatar,
             subtotal: request.body.subtotal,

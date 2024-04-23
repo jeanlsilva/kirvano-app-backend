@@ -7,12 +7,13 @@ import { UseCase } from '@/usecases/ports/use-case';
 
 export class CheckoutController implements Controller<CheckoutRequest> {
   constructor(private useCase: UseCase<HttpRequest<CheckoutRequest>, OrderResponse>) {}
-  async handle(request: HttpRequest<CheckoutRequest>): Promise<HttpResponse> {
+  async handle(request: HttpRequest<CheckoutRequest>): Promise<HttpResponse<OrderResponse>> {
     try {
       const response = await this.useCase.perform(request);
       return {
         statusCode: 200,
-        message: response.message
+        message: response.message,
+        data: response
       }
     } catch (error) {
       const userUnauthorized = error.constructor.name === 'UnauthorizedError';
