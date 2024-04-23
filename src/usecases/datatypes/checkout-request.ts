@@ -1,4 +1,7 @@
 export interface CheckoutRequest {
+    name: string
     cardNumber: string;
-    cardExpiration: Date;
+    expirationMonth: number;
+    expirationYear: number;
+    cvc: string;
 }

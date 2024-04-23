@@ -10,18 +10,20 @@ export class Checkout implements UseCase<CheckoutRequest, CheckoutResponse> {
 
     validateCard(cardNumber: string) {
         if (cardNumber === REFUSED_CARD_NUMBER) return false;
-        return /^(\S)(?!\1*$)/.test(cardNumber.replaceAll(' ', ''));
+        return /^(\S)(?!\1*$)/.test(cardNumber);
     }
 
     async perform(request: HttpRequest<CheckoutRequest>) {
         const cardNumber = request.body.cardNumber;
-        const expiryDate = request.body.cardExpiration;
+        const expirationMonth = request.body.expirationMonth;
+        const expirationYear = request.body.expirationYear;
+        const expiryDate = new Date(expirationYear, expirationMonth - 1, 1);
 
         if (!this.validateCard(cardNumber)) {
             throw new InvalidCardError();
         }
 
-        if (new Date(expiryDate).getTime() < Date.now()) {
+        if (expiryDate.getTime() < Date.now()) {
             throw new ExpiredCardError();
         }
 
