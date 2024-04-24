@@ -14,6 +14,8 @@ Além da funcionalidade de validação dos dados do cartão de crédito, esta AP
 
 Os endereços são salvos no banco de dados através de uma rota POST como a primeira etapa do processo. A verificação se o endereço já existe ou não é realizada no front-end. Já no caso do cartão de crédito, a API verifica se foi fornecido no corpo da requsição do checkout o atributo `card_id`, caso positivo, será utilizado o cartão existente, caso contrário será fornecido um objeto `card` contendo todos os dados do novo cartão para ser salvo no banco.
 
+Caso a validação do cartão seja bem sucedida, as informações do pedido são armazenadas no banco de dados. Tanto as informações do produto, subtotal, taxas e valor total quanto o endereço e o cartão atrelados ao pedido.
+
 ## Informações Técnicas
 
 Na validação do cartão, no caso do número ser inválido (conforme a especificação do projeto), a requisição retorna um erro 500 com a mensagem `Invalid Card`. Caso a data de expiração esteja vencida, a requisição retorna um erro 500 com a mensagem `Expired Card`. No caso de ambas as informações estiverem válidas, é retornado uma resposta com status 200 e a mensagem `Success`. Na camada de Usecase foram pré definidos os erros customizados de cartão inválido, cartão expirado além de requisição não autorizada.
