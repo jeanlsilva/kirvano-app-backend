@@ -24,6 +24,8 @@ Os endereços são salvos no banco de dados através de uma rota POST como a pri
 - `/address` (POST) - salva um novo endereço
 - `/address` (GET) - lista todos os endereços salvos
 
+Todas as rotas são protegidas com um middleware que verifica um access token recebido como query param, e só executa a rota caso o access token bater com o valor que foi pré-definido. (ver arquivo src/utils/constants.ts)
+
 ### Arquitetura
 
 Para o desenvolvimento da API, foi utilizada uma arquitetura de separação de camadas seguindo o design pattern `Factory Method`
