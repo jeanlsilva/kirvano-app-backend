@@ -16,6 +16,8 @@ Os endereços são salvos no banco de dados através de uma rota POST como a pri
 
 ## Informações Técnicas
 
+Na validação do cartão, no caso do número ser inválido (conforme a especificação do projeto), a requisição retorna um erro 500 com a mensagem `Invalid Card`. Caso a data de expiração esteja vencida, a requisição retorna um erro 500 com a mensagem `Expired Card`. No caso de ambas as informações estiverem válidas, é retornado uma resposta com status 200 e a mensagem `Success`. Na camada de Usecase foram pré definidos os erros customizados de cartão inválido, cartão expirado além de requisição não autorizada.
+
 ### Rotas
 
 - `/checkout` (POST) - finaliza o pedido
@@ -24,7 +26,7 @@ Os endereços são salvos no banco de dados através de uma rota POST como a pri
 - `/address` (POST) - salva um novo endereço
 - `/address` (GET) - lista todos os endereços salvos
 
-Todas as rotas são protegidas com um middleware que verifica um access token recebido como query param, e só executa a rota caso o access token bater com o valor que foi pré-definido. (ver arquivo src/utils/constants.ts)
+Todas as rotas são protegidas com um middleware que verifica um access token recebido como query param, e só executa a rota caso o access token bater com o valor que foi pré-definido (ver arquivo src/utils/constants.ts). No caso do não fornecimento do token, ou fornecimento de um token incorreto, a requisição retorna uma resposta com status 401 (Não autorizado).
 
 ### Arquitetura
 
